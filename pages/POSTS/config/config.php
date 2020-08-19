@@ -1,12 +1,13 @@
 <?php
 
-define('SITE_NAME', '4TEEN');
-define('DRIVER', 'mysql');
-define('HOST','localhost');
-define('USER', 'root');
-define('PASS', '');
-define('DB', 'blog');
-
-
+  define('BASE_URL', $_SERVER['DOCUMENT_ROOT'].'/POSTS');
+  define('BASE_URL_ADM', $_SERVER['DOCUMENT_ROOT'].'projeto/pages/Admin');
+  
+ //BANCO
+  define('DRIVER', 'mysql');
+  define('HOST', 'localhost');
+  define('USER', 'root');
+  define('PASS', '');
+  define('DB', 'blog');
 
 ?>

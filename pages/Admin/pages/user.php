@@ -1,60 +1,66 @@
 <div class="content-wrapper">
-     <!-- Content Header (Page header) -->
-     <div class="content-header">
+
+<div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Usuários</h1>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-    <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-12">
-    <table class="table table-hover text-nowrap">
+            <h1 class="m-0 text-dark">Usuários cadastrados</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <a class="btn btn-warning" href="?page=cadUser">
+                <i class="fas fa-plus"></i>
+                  ADICIONAR USUÁRIO
+              </a>
+            </ol>
+          </div>
+        </div>
+        <div class="card-body table-responsive p-0">
+        <table class="table table-hover text-nowrap">
                   <thead>
                     <tr>
-                      <th>#</th>
-                      <th>Nome</th>
-                      <th>Email</th>
-                      <th>Data</th>
-                      <th>Ações</th>
+                      <th>ID</th>
+                      <th>NOME</th>
+                      <th>EMAIL</th>
+                      <th>DATA</th>
+                      <th>AÇÕES</th>
                     </tr>
                   </thead>
                   <tbody>
+                  <?php
+                    
+                    $sql = "SELECT * FROM usuario";
+                    $consulta = $pdo->prepare($sql);
+                    $consulta->execute();
+
+                    $dados = $consulta->fetchAll(PDO::FETCH_OBJ);
+
+                    foreach($dados as $dado) {
+                      $date = date_create($dado->data);
+
+                  ?>
                     <tr>
-                      <td>183</td>
-                      <td>John Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-success">Approved</span></td>
-                      <td><a class="btn btn-danger" href="#"><i class="fa fa-trash"> </i> Deletar <a> | <a class="btn btn-info" href="#"><i class="fa fa-edit"> </i> Atualizar</td>
+                      <td><?= $dado->id ?></td>
+                      <td><?= $dado->nome?></td>
+                      <td><?= $dado->email?></td>
+                      <td><?= date_format($date, 'd/m/Y')?></td>
+                      <td>
+                        <a class="btn btn-secondary <?= $_SESSION['id'] == $dado->id? 'disabled': ''?>" onclick="return confirm('Deseja realmente deletar?')" href="functions/delUser.php?id=<?= $dado->id ?>">
+                          <i class="far fa-trash-alt"></i> 
+                            DELETAR
+                        </a>
+                        <a class="btn btn-info" href="?page=AtUser&id=<?= $dado->id ?>">
+                          <i class="far fa-edit"></i>
+                            ATUALIZAR
+                          </a>
+                      </td>
                     </tr>
-                    <tr>
-                      <td>219</td>
-                      <td>Alexander Pierce</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-warning">Pending</span></td>
-                      <td><a class="btn btn-danger" href="#"><i class="fa fa-trash"> </i> Deletar <a> | <a class="btn btn-info" href="#"><i class="fa fa-edit"> </i> Atualizar</td>
-                    </tr>
-                    <tr>
-                      <td>657</td>
-                      <td>Bob Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-primary">Approved</span></td>
-                      <td><a class="btn btn-danger" href="#"><i class="fa fa-trash"> </i> Deletar </a> |<a class="btn btn-info" href="#"><i class="fa fa-edit"> </i> Atualizar</td>
-                    </tr>
-                    <tr>
-                      <td>175</td>
-                      <td>Mike Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-danger">Denied</span></td>
-                      <td><a class="btn btn-danger"  href="#"><i class="fa fa-trash"> </i> Deletar <a> | <a class="btn btn-info" href="#"><i class="fa fa-edit"> </i> Atualizar</td>
-                    </tr>
+                    
+                    <?php } ?>
                   </tbody>
                 </table>
 </div>
+      </div>
 </div>
-</div>
+
 </div>
